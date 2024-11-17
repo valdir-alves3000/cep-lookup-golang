@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação da API CEP</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --text-color: #333;
+            --bg-code: #f5f7f9;
+            --border-color: #e1e4e8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .welcome-box {
+            background-color: var(--bg-code);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+	    border-left: 4px solid var(--primary-color);
+        }
+
+        code {
+            background-color: var(--bg-code);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        .endpoint-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .params {
+            margin-top: 1rem;
+        }
+
+        .param {
+            margin-bottom: 0.5rem;
+        }
+
+        .param-name {
+            font-weight: bold;
+        }
+
+        .example {
+            background-color: var(--bg-code);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow-x: auto;
+	    border-left: 4px solid var(--primary-color);
+        }
+
+        .status-code {
+            display: inline-block;
+            min-width: 60px;
+            font-weight: bold;
+        }
+
+        .description {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Documentação da API CEP</h1>
+
+    <div class="welcome-box">
+        <p>Bem-vindo à API de Consulta de CEP!</p>
+        <p>Esta API permite consultar informações de endereços brasileiros através do CEP, integrando com BrasilAPI e ViaCEP.</p>
+    </div>
+
+    <section>
+        <h2>Endpoints Disponíveis</h2>
+        
+        <div class="endpoint-title">GET /api/cep</div>
+        <div class="description">
+            Retorna informações detalhadas do endereço a partir do CEP fornecido.
+        </div>
+
+        <div class="params">
+            <h3>Parâmetros da Query</h3>
+            <div class="param">
+                <span class="param-name">cep</span>: CEP a ser consultado (apenas números)
+            </div>
+        </div>
+
+        <div class="example">
+            Exemplo: <code>/api/cep?cep=01001000</code>
+        </div>
+    </section>
+
+    <section>
+        <h2>Exemplo de Resposta</h2>
+        <div class="example">
+<pre>{
+    "address": {
+        "cep": "01001-000",
+        "logradouro": "Praça da Sé",
+        "bairro": "Sé",
+        "localidade": "São Paulo",
+        "uf": "SP"
+    },
+    "api": "brasilapi.com.br",
+}</pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Códigos de Status</h2>
+        <div class="param">
+            <span class="status-code">200</span>
+            <span>Sucesso - Retorna os dados do endereço</span>
+        </div>
+        <div class="param">
+            <span class="status-code">400</span>
+            <span>Erro - CEP não fornecido ou inválido</span>
+        </div>
+        <div class="param">
+            <span class="status-code">408</span>
+            <span>Erro - Timeout na consulta às APIs</span>
+        </div>
+    </section>
+
+    <section>
+        <h2>Notas Importantes</h2>
+        <ul>
+            <li>O CEP deve ser fornecido apenas com números (8 dígitos)</li>
+            <li>A API possui timeout de 1 segundo</li>
+            <li>A consulta é feita simultaneamente em duas APIs (BrasilAPI e ViaCEP)</li>
+            <li>O resultado retornado será da API que responder primeiro</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Exemplo de Uso</h2>
+        <div class="example">
+<pre>fetch('https://cep-lookup.vercel.app/api/cep?cep=01001000')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Erro:', error));</pre>
+        </div>
+    </section>
+</body>
+</html>

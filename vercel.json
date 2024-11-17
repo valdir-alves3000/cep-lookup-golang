@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/*.go",
+      "use": "@vercel/go"
+    },
+    {
+      "src": "templates/**/*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/docs",
+      "dest": "/templates/docs.html"
+    },
+    {
+      "src": "/api/cep",
+      "dest": "/api/cep.go"
+    },
+    {
+      "src": "/(.*)",
+      "status": 308,
+      "headers": { "Location": "/api/docs" }
+    }
+  ]
+}
